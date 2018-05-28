@@ -4,6 +4,7 @@ import https from 'https';
 import sprLib from 'sprestlib';
 import * as d3 from 'd3';
 import moment from 'moment';
+const svgToImg = require('svg-to-img');
 
 const SP_USER = 'ethan.dinnen@ocean.org';
 const SP_PASS = 'apiginthebin1!';
@@ -22,6 +23,108 @@ let projectsByMonth = { 2017: [], 2018: [], 2019: [], 2020: [] };
 let projectsBySize = { 2017: [], 2018: [], 2019: [], 2020: [] };
 let projectsByDepartment = { 2017: [], 2018: [], 2019: [], 2020: [] };
 let projectsByMedia = { 2017: [], 2018: [], 2019: [], 2020: [] };
+
+// Below are the functions that handle actual exporting:
+// getSVGString ( svgNode ) and svgString2Image( svgString, width, height, format, callback )
+function getSVGString( svgNode ) {
+	svgNode.setAttribute('xlink', 'http://www.w3.org/1999/xlink');
+	var cssStyleText = getCSSStyles( svgNode );
+	appendCSS( cssStyleText, svgNode );
+
+	var serializer = new XMLSerializer();
+	var svgString = serializer.serializeToString(svgNode);
+	svgString = svgString.replace(/(\w+)?:?xlink=/g, 'xmlns:xlink='); // Fix root xlink without namespace
+	svgString = svgString.replace(/NS\d+:href/g, 'xlink:href'); // Safari NS namespace fix
+
+	return svgString;
+
+	function getCSSStyles( parentElement ) {
+		var selectorTextArr = [];
+
+		// Add Parent element Id and Classes to the list
+		selectorTextArr.push( '#'+parentElement.id );
+		for (var c = 0; c < parentElement.classList.length; c++)
+				if ( !contains('.'+parentElement.classList[c], selectorTextArr) )
+					selectorTextArr.push( '.'+parentElement.classList[c] );
+
+		// Add Children element Ids and Classes to the list
+		var nodes = parentElement.getElementsByTagName("*");
+		for (var i = 0; i < nodes.length; i++) {
+			var id = nodes[i].id;
+			if ( !contains('#'+id, selectorTextArr) )
+				selectorTextArr.push( '#'+id );
+
+			var classes = nodes[i].classList;
+			for (var c = 0; c < classes.length; c++)
+				if ( !contains('.'+classes[c], selectorTextArr) )
+					selectorTextArr.push( '.'+classes[c] );
+		}
+
+		// Extract CSS Rules
+		var extractedCSSText = "";
+		for (var i = 0; i < document.styleSheets.length; i++) {
+			var s = document.styleSheets[i];
+
+			try {
+			    if(!s.cssRules) continue;
+			} catch( e ) {
+		    		if(e.name !== 'SecurityError') throw e; // for Firefox
+		    		continue;
+		    	}
+
+			var cssRules = s.cssRules;
+			for (var r = 0; r < cssRules.length; r++) {
+				if ( contains( cssRules[r].selectorText, selectorTextArr ) )
+					extractedCSSText += cssRules[r].cssText;
+			}
+		}
+
+
+		return extractedCSSText;
+
+		function contains(str,arr) {
+			return arr.indexOf( str ) === -1 ? false : true;
+		}
+
+	}
+
+	function appendCSS( cssText, element ) {
+		var styleElement = document.createElement("style");
+		styleElement.setAttribute("type","text/css");
+		styleElement.innerHTML = cssText;
+		var refNode = element.hasChildNodes() ? element.children[0] : null;
+		element.insertBefore( styleElement, refNode );
+	}
+}
+
+
+function svgString2Image( svgString, width, height, format, callback ) {
+	var format = format ? format : 'png';
+
+	var imgsrc = 'data:image/svg+xml;base64,'+ btoa( unescape( encodeURIComponent( svgString ) ) ); // Convert SVG string to data URL
+
+	var canvas = document.createElement("canvas");
+	var context = canvas.getContext("2d");
+
+	canvas.width = width;
+	canvas.height = height;
+
+	var image = new Image();
+	image.onload = function() {
+		context.clearRect ( 0, 0, width, height );
+		context.drawImage(image, 0, 0, width, height);
+
+		canvas.toBlob( function(blob) {
+			var filesize = Math.round( blob.length/1024 ) + ' KB';
+			if ( callback ) callback( blob, filesize );
+		});
+
+
+	};
+
+	image.src = imgsrc;
+}
+
 
 Promise.resolve()
 .then(() => {
@@ -147,9 +250,8 @@ Promise.resolve()
 	// $('#app').append(requestItems[5].Description);
 
 	requestItems.map((request) => {
-		let year = moment(request.Created).format('YYYY');
+		let year = parseInt(moment(request.Created).format('YYYY'));
 		let month = parseInt(moment(request.Created).format('MM'));
-		console.log(month);
 		let department = request.Department;
 		let destination = request.Destination.results[0];
 		let size = request.Category;
@@ -227,70 +329,90 @@ Promise.resolve()
 
 	console.log("pie-ing");
 
-
-
 	console.log(data);
+	(async () => {
+		var pie = await new d3pie('pieChart', {
+			"header": {
+				"title": {
+					"text": "Projects by Month",
+					"fontSize": 24,
+					"font": "open sans"
+				},
+			},
+			"footer": {
+				"color": "#999999",
+				"fontSize": 10,
+				"font": "open sans",
+				"location": "bottom-left"
+			},
+			"size": {
+				"canvasWidth": 590,
+				"pieOuterRadius": "90%"
+			},
+			"data": {
+				"sortOrder": "value-desc",
+				"content": data
+			},
+			"labels": {
+				"outer": {
+					"pieDistance": 32
+				},
+				"inner": {
+					"hideWhenLessThanPercentage": 3,
+				},
+				"mainLabel": {
+					"fontSize": 11
+				},
+				"percentage": {
+					"color": "#ffffff",
+					"decimalPlaces": 0
+				},
+				"value": {
+					"color": "#adadad",
+					"fontSize": 11
+				},
+				"lines": {
+					"enabled": true
+				},
+				"truncation": {
+					"enabled": true
+				}
+			},
+			"effects": {
+				"pullOutSegmentOnClick": {
+					"effect": "linear",
+					"speed": 400,
+					"size": 8
+				}
+			},
+			"misc": {
+				"gradient": {
+					"enabled": true,
+					"percentage": 100
+				}
+			}
+		});
+		d3.select('#pieChart')
+			.append("button")
+			.attr('type', 'button')
+			.attr('class', 'btn-btn')
+			.on('click', () => {
+				try {
+					const svg = getSVGString(document.getElementById('pieChart').childNodes[0]);
+					console.log(svg);
+					svgString2Image( svg, 2*590, 2*500, 'png', save );
 
-	var pie = new d3pie('pieChart', {
-		"header": {
-			"title": {
-				"text": "Projects by Month",
-				"fontSize": 24,
-				"font": "open sans"
-			},
-		},
-		"footer": {
-			"color": "#999999",
-			"fontSize": 10,
-			"font": "open sans",
-			"location": "bottom-left"
-		},
-		"size": {
-			"canvasWidth": 590,
-			"pieOuterRadius": "90%"
-		},
-		"data": {
-			"sortOrder": "value-desc",
-			"content": data
-		},
-		"labels": {
-			"outer": {
-				"pieDistance": 32
-			},
-			"inner": {
-				"hideWhenLessThanPercentage": 3,
-			},
-			"mainLabel": {
-				"fontSize": 11
-			},
-			"percentage": {
-				"color": "#ffffff",
-				"decimalPlaces": 0
-			},
-			"value": {
-				"color": "#adadad",
-				"fontSize": 11
-			},
-			"lines": {
-				"enabled": true
-			},
-			"truncation": {
-				"enabled": true
-			}
-		},
-		"effects": {
-			"pullOutSegmentOnClick": {
-				"effect": "linear",
-				"speed": 400,
-				"size": 8
-			}
-		},
-		"misc": {
-			"gradient": {
-				"enabled": true,
-				"percentage": 100
-			}
-		}
-	});
+					function save( dataBlob, filesize ) {
+						console.log(dataBlob);
+						saveAs( dataBlob, 'export.png' );
+					}
+				} catch (err) {
+					console.log(err);
+				}
+			})
+			.append('div')
+			.attr('class', 'label')
+			.text('download');
+	})();
 });
 /* eslint-enable */
