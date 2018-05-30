@@ -361,17 +361,17 @@ Promise.resolve()
 				"title": {
 					"text": `Projects by Month for ${currentYear}`,
 					"fontSize": 24,
-					"font": "open sans"
+					"font": "helvetica neue"
 				},
 			},
 			"footer": {
 				"color": "#999999",
 				"fontSize": 10,
-				"font": "open sans",
+				"font": "helvetica neue",
 				"location": "bottom-left"
 			},
 			"size": {
-				"canvasWidth": 590,
+				"canvasWidth": 690,
 				"pieOuterRadius": "90%"
 			},
 			"data": {
@@ -425,7 +425,7 @@ Promise.resolve()
 			.on('click', () => {
 				try {
 					const svg = getSVGString(document.getElementById('projectsByMonth').childNodes[0]);
-					svgString2Image( svg, 2*590, 2*500, 'png', save );
+					svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 					function save( dataBlob, filesize ) {
 						saveAs( dataBlob, `projectsByMonth${currentYear}.png` );
@@ -457,17 +457,17 @@ Promise.resolve()
 				"title": {
 					"text": `Projects by Department for ${currentYear}`,
 					"fontSize": 24,
-					"font": "open sans"
+					"font": "helvetica neue"
 				},
 			},
 			"footer": {
 				"color": "#999999",
 				"fontSize": 10,
-				"font": "open sans",
+				"font": "helvetica neue",
 				"location": "bottom-left"
 			},
 			"size": {
-				"canvasWidth": 590,
+				"canvasWidth": 690,
 				"pieOuterRadius": "90%"
 			},
 			"data": {
@@ -521,7 +521,7 @@ Promise.resolve()
 			.on('click', () => {
 				try {
 					const svg = getSVGString(document.getElementById('projectsByDepartment').childNodes[0]);
-					svgString2Image( svg, 2*590, 2*500, 'png', save );
+					svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 					function save( dataBlob, filesize ) {
 						saveAs( dataBlob, `projectsByDepartment${currentYear}.png` );
@@ -553,17 +553,17 @@ Promise.resolve()
 				"title": {
 					"text": `Projects by Media for ${currentYear}`,
 					"fontSize": 24,
-					"font": "open sans"
+					"font": "helvetica neue"
 				},
 			},
 			"footer": {
 				"color": "#999999",
 				"fontSize": 10,
-				"font": "open sans",
+				"font": "helvetica neue",
 				"location": "bottom-left"
 			},
 			"size": {
-				"canvasWidth": 590,
+				"canvasWidth": 690,
 				"pieOuterRadius": "90%"
 			},
 			"data": {
@@ -617,7 +617,7 @@ Promise.resolve()
 			.on('click', () => {
 				try {
 					const svg = getSVGString(document.getElementById('projectsByMedia').childNodes[0]);
-					svgString2Image( svg, 2*590, 2*500, 'png', save );
+					svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 					function save( dataBlob, filesize ) {
 						saveAs( dataBlob, `projectsByMedia${currentYear}.png` );
@@ -649,17 +649,17 @@ Promise.resolve()
 				"title": {
 					"text": `Projects by Size for ${currentYear}`,
 					"fontSize": 24,
-					"font": "open sans"
+					"font": "helvetica neue"
 				},
 			},
 			"footer": {
 				"color": "#999999",
 				"fontSize": 10,
-				"font": "open sans",
+				"font": "helvetica neue",
 				"location": "bottom-left"
 			},
 			"size": {
-				"canvasWidth": 590,
+				"canvasWidth": 690,
 				"pieOuterRadius": "90%"
 			},
 			"data": {
@@ -713,7 +713,7 @@ Promise.resolve()
 			.on('click', () => {
 				try {
 					const svg = getSVGString(document.getElementById('projectsBySize').childNodes[0]);
-					svgString2Image( svg, 2*590, 2*500, 'png', save );
+					svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 					function save( dataBlob, filesize ) {
 						saveAs( dataBlob, `projectsBySize${currentYear}.png` );
@@ -761,17 +761,17 @@ function plot() {
 						"title": {
 							"text": `Projects by Month for ${currentYear}`,
 							"fontSize": 24,
-							"font": "open sans"
+							"font": "helvetica neue"
 						},
 					},
 					"footer": {
 						"color": "#999999",
 						"fontSize": 10,
-						"font": "open sans",
+						"font": "helvetica neue",
 						"location": "bottom-left"
 					},
 					"size": {
-						"canvasWidth": 590,
+						"canvasWidth": 690,
 						"pieOuterRadius": "90%"
 					},
 					"data": {
@@ -825,7 +825,7 @@ function plot() {
 					.on('click', () => {
 						try {
 							const svg = getSVGString(document.getElementById('projectsByMonth').childNodes[0]);
-							svgString2Image( svg, 2*590, 2*500, 'png', save );
+							svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 							function save( dataBlob, filesize ) {
 								saveAs( dataBlob, `projectsByMonth${currentYear}.png` );
@@ -862,17 +862,17 @@ function plot() {
 						"title": {
 							"text": `Projects by Department for ${currentYear}`,
 							"fontSize": 24,
-							"font": "open sans"
+							"font": "helvetica neue"
 						},
 					},
 					"footer": {
 						"color": "#999999",
 						"fontSize": 10,
-						"font": "open sans",
+						"font": "helvetica neue",
 						"location": "bottom-left"
 					},
 					"size": {
-						"canvasWidth": 590,
+						"canvasWidth": 690,
 						"pieOuterRadius": "90%"
 					},
 					"data": {
@@ -926,7 +926,7 @@ function plot() {
 					.on('click', () => {
 						try {
 							const svg = getSVGString(document.getElementById('projectsByDepartment').childNodes[0]);
-							svgString2Image( svg, 2*590, 2*500, 'png', save );
+							svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 							function save( dataBlob, filesize ) {
 								saveAs( dataBlob, `projectsByDepartment${currentYear}.png` );
@@ -963,17 +963,17 @@ function plot() {
 						"title": {
 							"text": `Projects by Media for ${currentYear}`,
 							"fontSize": 24,
-							"font": "open sans"
+							"font": "helvetica neue"
 						},
 					},
 					"footer": {
 						"color": "#999999",
 						"fontSize": 10,
-						"font": "open sans",
+						"font": "helvetica neue",
 						"location": "bottom-left"
 					},
 					"size": {
-						"canvasWidth": 590,
+						"canvasWidth": 690,
 						"pieOuterRadius": "90%"
 					},
 					"data": {
@@ -1027,7 +1027,7 @@ function plot() {
 					.on('click', () => {
 						try {
 							const svg = getSVGString(document.getElementById('projectsByMedia').childNodes[0]);
-							svgString2Image( svg, 2*590, 2*500, 'png', save );
+							svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 							function save( dataBlob, filesize ) {
 								saveAs( dataBlob, `projectsByMedia${currentYear}.png` );
@@ -1064,17 +1064,17 @@ function plot() {
 						"title": {
 							"text": `Projects by Size for ${currentYear}`,
 							"fontSize": 24,
-							"font": "open sans"
+							"font": "helvetica neue"
 						},
 					},
 					"footer": {
 						"color": "#999999",
 						"fontSize": 10,
-						"font": "open sans",
+						"font": "helvetica neue",
 						"location": "bottom-left"
 					},
 					"size": {
-						"canvasWidth": 590,
+						"canvasWidth": 690,
 						"pieOuterRadius": "90%"
 					},
 					"data": {
@@ -1128,7 +1128,7 @@ function plot() {
 					.on('click', () => {
 						try {
 							const svg = getSVGString(document.getElementById('projectsBySize').childNodes[0]);
-							svgString2Image( svg, 2*590, 2*500, 'png', save );
+							svgString2Image( svg, 2*690, 2*500, 'png', save );
 
 							function save( dataBlob, filesize ) {
 								saveAs( dataBlob, `projectsBySize${currentYear}.png` );
