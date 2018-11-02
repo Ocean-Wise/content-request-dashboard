@@ -5,9 +5,10 @@ import sprLib from 'sprestlib';
 import * as d3 from 'd3';
 import moment from 'moment';
 const svgToImg = require('svg-to-img');
+const prompt = require('electron-prompt');
 
 const SP_USER = 'ethan.dinnen@ocean.org';
-const SP_PASS = 'apiginthebin1!';
+const SP_PASS = 'Starhorsepossiblebusiness1!';
 const SP_URL = 'https://vamsc.sharepoint.com';
 const SP_HOST = SP_URL.toLowerCase().replace('https://', '').replace('https://', '');
 let gBinarySecurityToken = '';
@@ -20,7 +21,7 @@ let currentYear = currentYearSelector.options[currentYearSelector.selectedIndex]
 
 const departments = ['Animal Care', 'Content', 'HR', 'Volunteer Services', 'Brand', 'Admin', 'CORI', 'Catering & Events', 'Communications', 'Content', 'Design', 'Education', 'Exhibits', 'External Relations', 'GCSC', 'Guest Services', 'Interpreters', 'Marine Mammal Rescue', 'Marketing', 'Ocean Wise Seafood', 'Other', 'Research', 'Retail', 'Social Media'];
 const mediaTypes = ['Video', 'Web', '360', 'Audio', 'Email', 'Retail', 'Media Release', 'Mobile', 'Print', 'Screen', 'Exhibits', 'Other'];
-const projectSizes = ['Small', 'Medium', 'Large'];
+const projectSizes = ['Small', 'Medium', 'Large', 'Small Video', 'Medium Video', 'Large Video', 'Small Photo', 'Medium Photo', 'Large Photo', 'Small Web', 'Medium Web', 'Large Web'];
 
 let contentRequests = [];
 let projectsByYear = {};
@@ -140,6 +141,9 @@ function svgString2Image( svgString, width, height, format, callback ) {
 
 
 Promise.resolve()
+.then(() => {
+
+})
 .then(() => {
 	// STEP 1: Login to MS with user/pass and get SecurityToken
 	console.log(' * STEP 1/2: Auth into login.microsoftonline.com ...');
@@ -336,8 +340,10 @@ Promise.resolve()
 			}
 			if (projectsBySize[year][size] === undefined) {
 				projectsBySize[year][size] = [request];
+				console.log(size);
 			} else {
 				projectsBySize[year][size] = projectsBySize[year][size].concat([request]);
+				console.log(size);
 			}
 		}
 	});
@@ -380,6 +386,7 @@ Promise.resolve()
 			},
 			"labels": {
 				"outer": {
+  				"format": "label-value1",
 					"pieDistance": 32
 				},
 				"inner": {
@@ -476,6 +483,7 @@ Promise.resolve()
 			},
 			"labels": {
 				"outer": {
+  				"format": "label-value1",
 					"pieDistance": 32
 				},
 				"inner": {
@@ -572,6 +580,7 @@ Promise.resolve()
 			},
 			"labels": {
 				"outer": {
+  				"format": "label-value1",
 					"pieDistance": 32
 				},
 				"inner": {
@@ -668,6 +677,7 @@ Promise.resolve()
 			},
 			"labels": {
 				"outer": {
+  				"format": "label-value1",
 					"pieDistance": 32
 				},
 				"inner": {
@@ -780,6 +790,7 @@ function plot() {
 					},
 					"labels": {
 						"outer": {
+  						"format": "label-value1",
 							"pieDistance": 32
 						},
 						"inner": {
@@ -881,6 +892,7 @@ function plot() {
 					},
 					"labels": {
 						"outer": {
+  						"format": "label-value1",
 							"pieDistance": 32
 						},
 						"inner": {
@@ -982,6 +994,7 @@ function plot() {
 					},
 					"labels": {
 						"outer": {
+  						"format": "label-value1",
 							"pieDistance": 32
 						},
 						"inner": {
@@ -1079,10 +1092,11 @@ function plot() {
 					},
 					"data": {
 						"sortOrder": "value-desc",
-						"content": data
+						"content": data,
 					},
 					"labels": {
 						"outer": {
+  						"format": "label-value1",
 							"pieDistance": 32
 						},
 						"inner": {

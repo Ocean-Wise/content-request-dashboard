@@ -1908,6 +1908,12 @@ detective-stylus@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/detective-stylus/-/detective-stylus-1.0.0.tgz#50aee7db8babb990381f010c63fabba5b58e54cd"
 
+doc-ready@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/doc-ready/-/doc-ready-1.0.4.tgz#37f5391969cff994303fdfef2e5d50357f8164d3"
+  dependencies:
+    eventie "^1"
+
 doctrine@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-1.5.0.tgz#379dce730f6166f76cefa4e6707a159b02c5a6fa"
@@ -2243,6 +2249,12 @@ electron-prebuilt-compile@2.0.0:
     electron-compile "*"
     electron-compilers "*"
     yargs "^6.6.0"
+
+electron-prompt@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/electron-prompt/-/electron-prompt-1.2.0.tgz#e1d330ca8791a28799194066d1217bb8d9a062db"
+  dependencies:
+    doc-ready "^1.0.4"
 
 electron-rebuild@^1.6.0:
   version "1.7.3"
@@ -2635,6 +2647,10 @@ event-emitter@~0.3.5:
   dependencies:
     d "1"
     es5-ext "~0.10.14"
+
+eventie@^1:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/eventie/-/eventie-1.0.6.tgz#d4ffc8b0c2b5e493c2aa1b22cbe918d3aee74437"
 
 events@1.1.1:
   version "1.1.1"
