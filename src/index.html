@@ -22,9 +22,18 @@
     </style>
   </head>
   <body>
+    <center id="loginForm" style="margin-bottom: 15px;">
+      <form action="javascript:init();">
+        <input type='text' id="username" placeholder="Username" />
+        <input type='password' id="password" placeholder="Password" />
+        <button type=submit>
+          Login
+        </button>
+      </form>
+    </center>
     <center>
       <select id="yearSelector" onchange="plot()">
-        <option value="2017" selected="selected">2017</option>
+        <option value="2017">2017</option>
         <option value="2018">2018</option>
         <option value="2019">2019</option>
         <option value="2020">2020</option>
@@ -53,6 +62,12 @@
     </div>
 
     <!-- <script>window.$ = window.jQuery = require('./jquery.min.js');</script> -->
+    <script>
+      const selector = document.getElementById('yearSelector');
+      const year = (new Date()).getFullYear();
+      const index = year - 2017;
+      selector.options[index].selected = true;
+    </script>
     <script src="./canvas-toBlob.js"></script>
     <script src="./FileSaver.min.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
